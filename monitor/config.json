@@ -1,0 +1,12 @@
+{
+  "listen": ":3000",
+  "frontend": "frontend",
+  "auth_secret": "auth_secret",
+  "web_uri": "/ws",
+  "hook_uri": "/hook",
+  "hook_token": "hook_token",
+  "update_uri": "/monitor",
+  "tg_enable": false,
+  "tg_token": "your_telegram_bot_token",
+  "tg_chat_id": 0
+}
