@@ -168,12 +168,12 @@ func main() {
 	config.AllowAllOrigins = true
 	h.Use(cors.New(config))
 	h.NoHijackConnPool = true
-	h.GET("/info", Info)
-	h.POST("/info", UpdateInfo)
-	h.GET(cfg.UpdateUri, monitor)
-	h.GET(cfg.WebUri, ws)
-	h.GET(cfg.HookUri, Hook)
-	h.POST("/delete", DeleteHost)
+	h.GET(cfg.SubRoute+cfg.WsUri, ws)
+	h.GET(cfg.SubRoute+cfg.HookUri, Hook)
+	h.GET(cfg.SubRoute+cfg.InfoUri, Info)
+	h.POST(cfg.SubRoute+cfg.InfoUri, UpdateInfo)
+	h.GET(cfg.SubRoute+cfg.UpdateUri, monitor)
+	h.POST(cfg.SubRoute+cfg.DeleteUri, DeleteHost)
 	h.StaticFS("/", &app.FS{
 		Root:               cfg.Frontend,
 		IndexNames:         []string{"index.html"}, // 设置默认索引文件

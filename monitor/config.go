@@ -10,10 +10,13 @@ type Config struct {
 	Listen     string `json:"listen"`
 	Frontend   string `json:"frontend"`
 	AuthSecret string `json:"auth_secret"`
-	WebUri     string `json:"web_uri"`
+	SubRoute   string `json:"subroute"`
+	InfoUri    string `json:"info_uri"`
+	WsUri      string `json:"ws_uri"`
+	DeleteUri  string `json:"delete_uri"`
+	UpdateUri  string `json:"update_uri"`
 	HookUri    string `json:"hook_uri"`
 	HookToken  string `json:"hook_token"`
-	UpdateUri  string `json:"update_uri"`
 	TgEnable   bool   `json:"tg_enable"`
 	TgToken    string `json:"tg_token"`
 	TgChatID   int64  `json:"tg_chat_id"`
