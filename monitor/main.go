@@ -174,13 +174,18 @@ func main() {
 	h.GET(cfg.WebUri, ws)
 	h.GET(cfg.HookUri, Hook)
 	h.POST("/delete", DeleteHost)
-	h.Static("/", cfg.Frontend) // 静态目录
-	h.GET("/", Index)
+	h.StaticFS("/", &app.FS{
+		Root:               cfg.Frontend,
+		IndexNames:         []string{"index.html"}, // 设置默认索引文件
+		GenerateIndexPages: false,                  // 禁止生成索引页面，可选
+		Compress:           false,                  // 不启用压缩，可选
+		AcceptByteRange:    false,                  // 不接受字节范围请求，可选
+		PathRewrite:        nil,
+		PathNotFound: func(ctx context.Context, c *app.RequestContext) {
+			c.NotFound()
+		},
+	})
 	h.Spin()
-}
-
-func Index(_ context.Context, c *app.RequestContext) {
-	c.File(cfg.Frontend + "/index.html")
 }
 
 func Hook(_ context.Context, c *app.RequestContext) {
