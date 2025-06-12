@@ -98,7 +98,7 @@ let nowtime = (Math.floor(Date.now() / 1000))
 
 const fetchConfig = async () => {
   try {
-    const res = await axios.get('/config.json')
+    const res = await axios.get('config.json')
     socketURL.value = res.data.socket
     apiURL.value = res.data.apiURL
   } catch (e) {
@@ -319,8 +319,9 @@ provide('handleChangeType', handleChangeType)
         <svg class="arco-icon" viewBox="0 0 48 48" fill="currentColor">
           <path data-v-2ee6cb6b="" fill-rule="evenodd" clip-rule="evenodd" d="M42.919 11.923L25 1.577a2 2 0 00-2 0L5.081 11.923a2 2 0 00-1 1.732v20.69a2 2 0 001 1.732L23 46.423a2 2 0 002 0l17.919-10.346a2 2 0 001-1.732v-20.69a2 2 0 00-1-1.732zM30.556 9.525L38.5 14 24 23l-13.808-8.668L17.5 10l6.5 4 6.556-4.475zM22 40.441V26.286L8 17.358v7.928l8 5.464v6.227l6 3.464zm10-3.464l-6 3.464V26.286l14-8.928v8.928l-8 5.464v5.227z" fill="currentColor"></path>
         </svg>
-        <span>Akile Monitor</span>
-        <small style="font-weight: 400;opacity: .8"> ｜ {{ $t('title') }}</small>
+        <!--<span>Akile Monitor</span>-->
+        <small style="font-weight: 400;opacity: .8"> ｜ </small>
+        <small style="font-weight: 400;opacity: .8">{{ $t('title') }}</small>
       </a>
       <a-space>
         <HeaderLocale />
@@ -346,17 +347,17 @@ provide('handleChangeType', handleChangeType)
         <div class="name">
           <div class="title">
             <span :class="`flag-icon flag-icon-${item.Host.Name.slice(0, 2).replace('UK', 'GB').toLowerCase()}`"></span>
-            {{item.Host.Name}}
+            {{item.Host.Name.slice(2)}}
           </div>
           <div class="status" :class="item.status ? 'online' : 'offline'">
             <span>{{item.status  ? $t('online') : $t('offline')}}</span>
             <span style="margin-left: 6px;">{{formatUptime(item.State.Uptime)}}</span>
           </div>
         </div>
-        <div class="platform">
+        <!--<div class="platform">
           <div class="monitor-item-title">{{ $t('system') }}</div>
           <div class="monitor-item-value">{{item.Host.Platform}} {{item.Host.PlatformVersion}}</div>
-        </div>
+        </div>-->
         <div class="cpu">
           <div class="monitor-item-title">CPU</div>
           <div class="monitor-item-value">{{item.State.CPU.toFixed(2) + '%'}}</div>
@@ -529,8 +530,8 @@ provide('handleChangeType', handleChangeType)
         <a-button type="primary" :long="true" @click="handleEditHost">{{$t('edit-host-btn')}}</a-button>
       </div>
     </a-modal>
-    <div class="footer" style="margin-top: 30px">{{$t('open-source')}} <a href="https://github.com/akile-network/akile_monitor">GitHub v0.0.3</a></div>
-    <div class="footer" style="margin-bottom: 30px">Copyright © 2023-{{new Date().getFullYear()}} Akile LTD.</div>
+    <div class="footer" style="margin-top: 30px">{{$t('open-source')}} <a href="https://github.com/akile-network/akile_monitor">GitHub</a></div>
+    <div class="footer" style="margin-bottom: 30px;display: none">Copyright © 2023-{{new Date().getFullYear()}} Akile LTD.</div>
   </div>
 </template>
 

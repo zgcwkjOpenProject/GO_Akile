@@ -23,6 +23,7 @@
     "@vitejs/plugin-vue": "^5.2.1",
     "flag-icons-svg": "^0.0.3",
     "vite": "^6.0.1",
+    "vite-plugin-html": "^3.2.2",
     "vite-plugin-vue-devtools": "^7.6.5"
   }
 }
