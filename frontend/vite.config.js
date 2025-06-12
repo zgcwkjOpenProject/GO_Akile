@@ -8,8 +8,9 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 import { createHtmlPlugin } from 'vite-plugin-html'
 
 const generateConfig = () => ({
-  socket: process.env.SOCKETURL || "ws://192.168.31.64:3000/ws",
   apiURL: process.env.APIURL || "http://192.168.31.64:3000",
+  socket: process.env.SOCKETURL || "ws://192.168.31.64:3000/ws",
+  heartbeat: parseInt(process.env.HEARTBEAT || "1000"),
 })
 
 // https://vite.dev/config/

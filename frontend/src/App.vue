@@ -14,8 +14,9 @@ import {useI18n} from "vue-i18n";
 
 const { t } = useI18n()
 
-const socketURL = ref('')
 const apiURL = ref('')
+const socketURL = ref('')
+const socketHeartbeat = ref('')
 
 const theme = window.localStorage.getItem('theme') || 'light'
 const dark = ref(theme !== 'light')
@@ -99,8 +100,9 @@ let nowtime = (Math.floor(Date.now() / 1000))
 const fetchConfig = async () => {
   try {
     const res = await axios.get('config.json')
-    socketURL.value = res.data.socket
     apiURL.value = res.data.apiURL
+    socketURL.value = res.data.socket
+    socketHeartbeat.value = res.data.heartbeat
   } catch (e) {
     Message.error(t('get-config-error'))
   }
@@ -108,9 +110,9 @@ const fetchConfig = async () => {
 
 const initScoket = async () => {
   await fetchConfig()
-
-  socket = new WebSocket(socketURL.value);  // 替换为实际的 WebSocket 服务器 URL
-
+  // WebSocket 服务器地址
+  socket = new WebSocket(socketURL.value);
+  // WebSocket 消息
   socket.onmessage = function(event) {
     try {
       const message = event.data;
@@ -146,8 +148,12 @@ const initScoket = async () => {
         }
       })
 
-      setTimeout(() => sendPing(), 1000)
-
+      // 刷新间隔
+      let heartbeat = 1000
+      if (socketHeartbeat.value > 1000) {
+        heartbeat = socketHeartbeat.value
+      }
+      setTimeout(() => sendPing(), heartbeat)
     } catch (error) {
       console.error(t('ws-error'), error);
     }
@@ -530,8 +536,7 @@ provide('handleChangeType', handleChangeType)
         <a-button type="primary" :long="true" @click="handleEditHost">{{$t('edit-host-btn')}}</a-button>
       </div>
     </a-modal>
-    <div class="footer" style="margin-top: 30px">{{$t('open-source')}} <a href="https://github.com/akile-network/akile_monitor">GitHub</a></div>
-    <div class="footer" style="margin-bottom: 30px;display: none">Copyright © 2023-{{new Date().getFullYear()}} Akile LTD.</div>
+    <div class="footer" style="margin: 30px 0">{{$t('open-source')}} <a href="https://github.com/akile-network/akile_monitor">GitHub</a></div>
   </div>
 </template>
 
